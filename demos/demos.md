@@ -35,10 +35,11 @@ Reference data can be loaded to Redis using data sources, pipelines, or any othe
 
 Figure 2, shows the model where the source window gets the dimension data (records) from the CSV, and the StateDB writer window write them to the Redis.
 
-<figure align="center">
-  <img src="demos/images/Demo1_ESPModel.jpg" width="20%" height="20%">
-  <figcaption><i>Figure 2. ESP XML Model to load reference/Dimension data into Redis</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo1_ESPModel.jpg" width="20%" height="20%"/>
+    <br>
+    <em>Figure 2. ESP XML Model to load reference/Dimension data into Redis</em>
+</p>
 
 Below is the configuration for the StateDB writer window. Change the values for the hostname and password with your Redis credentials.
 
@@ -57,17 +58,19 @@ Below is the configuration for the StateDB writer window. Change the values for 
 ````
 When the above model is executed, you will see the output like in the Figure 3. 
 
-<figure align="center">
-  <img src="demos/images/Demo1_ESPModelRun.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 3. ESP XML Model Execution in ESP Studio</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo1_ESPModelRun.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 3. ESP XML Model Execution in ESP Studio</em>
+</p>
 
 Figure 4 shows how the reference data records are then seen in Redis. In our test sample, all the users start at the same balance of $10000. 
 
-<figure align="center">
-  <img src="demos/images/Demo1_Redis.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 4. Reference data in Redis</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo1_Redis.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 4. Reference data in Redis</em>
+</p>
 
 ## Demo 2: Verify credit card account information and update the balance amount
 
@@ -75,24 +78,27 @@ In demo 2, credit card users make transactions and at every transaction, a new e
 
 Figure 5 demonstrates the flow of this demo. The transaction events are sent to the ESP where the StateDB Reader window fetches the required information from the Redis.  In Redis, we verify if the balance is higher than the transaction amount and if it is true, a new transaction event is written in the Redis and the amount balance is updated. Additionally, if the balance is lower than the desired transaction amount, an alert message is sent to the credit card holder and the transaction is canceled. 
 
-<figure align="center">
-  <img src="demos/images/Demo2_VerifyandUpdateAmount.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 5. Demo 2 to Verify Credit Card Account Information and Update the Balance Amount</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo2_VerifyandUpdateAmount.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 5. Demo 2 to Verify Credit Card Account Information and Update the Balance Amount</em>
+</p>
 
 Figure 6 presents the ESP model corresponding to this demo. Here, ESP receives a transaction event at the `source window`. Then, ESP will fetch the balance amount of this particular user which made the transaction using the `StateDB Reader window`. We will get user details, user ID, and the balance amount. If the balance is less than the transaction amount, it will give an alert message in the `compute window`. But if it is not, then two actions will happen. First, this new transaction will be added to the Redis and the current balance will be modified to reflect the new transaction. So basically, the transaction amount will be subtracted from the balance and written back to the Redis. 
 
-<figure align="center">
-  <img src="demos/images/Demo2_ESPModel.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 6. ESP XML Model to Verify Credit Card Account Information and Update the Balance Amount</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo2_ESPModel.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 6. ESP XML Model to Verify Credit Card Account Information and Update the Balance Amount</em>
+</p>
 
 Now you can run the model using the historic transaction test data ` historicaltransaction100k.csv`. Figure 7 shows how the `newbalance` is created by subtracting the `amount` from the `balance`. It is important to note that we are first reading the record from the Redis and then modifying it. Not only that, two separate write operations are happening in parallel, i.e., writing the new transaction to Redis and writing the newly computed balance.
 
-<figure align="center">
-  <img src="demos/images/Demo2_ESPModelRun.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 7. ESP XML Model Execution in ESP Studio</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo2_ESPModelRun.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 7. ESP XML Model Execution in ESP Studio</em>
+</p>
 
 **NOTE:** The time difference between the two transactions from the same user must be greater than 1 millisecond. This is usually the case in general as no user makes two transactions within a period of 1 millisecond. If that happens, then the read before write (second transaction) operation can give inconsistent results. We encounter this because ESP is processing way faster than the Redis (read and write to Redis). However, this is an edge case and never happens in real-world scenarios.
 
@@ -102,46 +108,52 @@ In this demo, we will demonstrate fetching all the matching transactions for a c
 
 **NOTE:** In the demo, we will not implement the alert part.
 
-<figure align="center">
-  <img src="demos/images/Demo3_MultipleFetchBeforeWrite.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 8. Demo to Demonstrate Multiple Data Fetch with the StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_MultipleFetchBeforeWrite.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 8. Demo to Demonstrate Multiple Data Fetch with the StateDB Reader Window</em>
+</p>
 
 Figure 9, shows the ESP XML model flow of this demo. We get the transaction events in the `Source Window`. In the `StateDB Reader Window` we fetch all the records of the current user. This is where we perform multiple fetches from Redis. `Filter Window` then filters out all the transactions above $1000. Note that we are using a stateful model with an `Aggregate Window` which counts the number of transaction events above $1000 followed by another  `Filter Window` that counts these transactions and if the number of transactions exceeds or equals 2, an alert is generated. 
 
-<figure align="center">
-  <img src="demos/images/Demo3_ESPModel.jpg" width="20%" height="20%">
-  <figcaption><i>Figure 9. ESP XML Model for Multiple Data Fetch with the StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_ESPModel.jpg" width="20%" height="20%"/>
+    <br>
+    <em>Figure 9. ESP XML Model for Multiple Data Fetch with the StateDB Reader Window</em>
+</p>
 
 Figure 10, shows all the input transactions. To keep it simple and to understand the functionality of the demo, we are sending two transaction events generated by `userid_20` and `userid_21`. 
 
-<figure align="center">
-  <img src="demos/images/Demo3_sourceWindowInputs.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 10. Input Events to Source Window in the ESP Model</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_sourceWindowInputs.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 10. Input Events to Source Window in the ESP Model</em>
+</p>
 
 In Figure 11, we see the fetched events for the `useri_20`. These are all `insert` events. 
 
-<figure align="center">
-  <img src="demos/images/Demo3_inserts.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 11. Fetched "insert" events in ESP StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_inserts.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 11. Fetched "insert" events in ESP StateDB Reader Window</em>
+</p>
 
 However, we also see corresponding `delete` events for those `insert` events in Figure 12. These delete events are generated in the `StateDB Reader Window` via the property **generate-deletes="true"**. 
 This is required to delete the temporary state created by the model in the internal memory of the ESP server pod. Here we use internal memory as a transient storage to keep the matching records during the processing of that event. Once the event is processed, the matching records from the internal memory are deleted. Do not confuse this `generate-deletes` property with Time-To-Die (TTD) in Redis. They are different.
 
-<figure align="center">
-  <img src="demos/images/Demo3_deletes.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 12. Fetched "delete" events in ESP StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_deletes.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 12. Fetched "delete" events in ESP StateDB Reader Window</em>
+</p>
 
 Figure 13, `Filter Window` shows the final results with the count of transactions higher than $1000. 
 
-<figure align="center">
-  <img src="demos/images/Demo3_filterResults.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 13. Final results in the Filter Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo3_filterResults.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 13. Final results in the Filter Window</em>
+</p>
 
 ## Demo 4: Detect fraudulent transactions with aggregation using StateDB Reader Window
 
@@ -150,38 +162,43 @@ Many banks now send such alert messages that if this transaction is not by you, 
 
 Here, the average of transactions can be computed over a month, months, or even a year. And this is the retention policy for the transactions stored in Redis. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_SimpleAggregation.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 14. Demo to demonstrate Detection of fraudulent transactions with aggregation using StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_SimpleAggregation.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 14. Demo to demonstrate Detection of fraudulent transactions with aggregation using StateDB Reader Window</em>
+</p>
 
 Figure 15 shows the model which receives the transaction events in the `Source Window`. In the `StateDB Reader Window`, it fetches all the records of the user (user is obtained from the current transaction event) and calculates the average amount of all the transactions done in a given period. The `Filter Window` filters out the events where the new transaction amount is greater than the average amount of the previous historic transactions. `Compute Window` shows the alert message with the amount of high value. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_ESPModel.jpg" width="20%" height="20%">
-  <figcaption><i>Figure 15. ESP XML Model for Simple Aggregation</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_ESPModel.jpg" width="20%" height="20%"/>
+    <br>
+    <em>Figure 15. ESP XML Model for Simple Aggregation</em>
+</p>
 
 Figure 16 shows the results of the `StateDB Reader Window` which displays the `avgamount` of the previous historic transactions along with the `amount` of the new *malicious* transaction amount for that user to compare with. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_StateDBReaderOutput.jpg" width="90%" height="90%">
-  <figcaption><i>Figure 16. Results of StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_StateDBReaderOutput.jpg" width="90%" height="90%"/>
+    <br>
+    <em>Figure 16. Results of StateDB Reader Window</em>
+</p>
 
 In below Figure 17, the `Filter Window` shows all the results where the *malicious* transaction amount exceeds the average amount (of all the transactions) for that user. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_FilterOutput.jpg" width="90%" height="90%">
-  <figcaption><i>Figure 17. Results of Filter Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_FilterOutput.jpg" width="90%" height="90%"/>
+    <br>
+    <em>Figure 17. Results of Filter Window</em>
+</p>
 
 Finally, Figure 18 displays the result from the `Compute Window` which shows the alert message for all the transactions where the amount was higher than the average amount.
 
-<figure align="center">
-  <img src="demos/images/Demo4_ComputeOutput.jpg" width="90%" height="90%">
-  <figcaption><i>Figure 17. Results of Compute Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_ComputeOutput.jpg" width="90%" height="90%"/>
+    <br>
+    <em>Figure 18. Results of Compute Window</em>
+</p>
 
 ### Auto-scaling ESP Server Pods with Kafka to Detect Fraudulent transactions
 
