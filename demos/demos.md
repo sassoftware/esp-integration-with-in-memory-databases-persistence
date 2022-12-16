@@ -235,51 +235,57 @@ In the `Source Window`, we have configured the Kafka connector as shown below. I
         </window-source>
 ````
 
-Figure 18 demonstrates the high-level architecture of the auto-scaling ESP server pods with Kafka to detect fraudulent transactions. 
+Figure 19 demonstrates the high-level architecture of the auto-scaling ESP server pods with Kafka to detect fraudulent transactions. 
 
 For this demo, we have 1 million user information with a starting balance in the Redis. We have used another ESP model to stream user transactions to Kafka input topic `intopic`. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_ScalableSimpleAggregation.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 18. High-level Architecture of Auto-scaling ESP Server Pods with Kafka to Detect Fraudulent transactions</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_ScalableSimpleAggregation.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 19. High-level Architecture of Auto-scaling ESP Server Pods with Kafka to Detect Fraudulent transactions</em>
+</p>
  
 We run both the models,`Scalable_AggregationTransaction_Redis.xml` and `inputtransactions.xml` from SAS Event Stream Manager.  
 
-Figure 19 shows how we load and start the `Scalable_AggregationTransaction_Redis.xml` model. 
+Figure 20 shows how we load and start the `Scalable_AggregationTransaction_Redis.xml` model. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_LoadProjectinESM.jpg" width="40%" height="40%">
-  <figcaption><i>Figure 19. Load Scalable Model Scalable_AggregationTransaction_Redis.xml in SAS ESM</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_LoadProjectinESM.jpg" width="40%" height="40%"/>
+    <br>
+    <em>Figure 20. Load Scalable Model Scalable_AggregationTransaction_Redis.xml in SAS ESM</em>
+</p>
 
-We also provide the deployment settings in the SAS ESM. We configure CPU, memory, and number of min and max replicas for scaling. Figure 20, demonstrates how to provide these settings. 
+We also provide the deployment settings in the SAS ESM. We configure CPU, memory, and number of min and max replicas for scaling. Figure 21, demonstrates how to provide these settings. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_DeploymentSettingsESM.jpg" width="40%" height="40%">
-  <figcaption><i>Figure 20. Deployment Settings for Model Scalable_AggregationTransaction_Redis.xml in SAS ESM</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_DeploymentSettingsESM.jpg" width="40%" height="40%"/>
+    <br>
+    <em>Figure 21. Deployment Settings for Model Scalable_AggregationTransaction_Redis.xml in SAS ESM</em>
+</p>
 
-Once we start the model, you can see and review it as shown in Figure 21. 
+Once we start the model, you can see and review it as shown in Figure 22. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_ScalableModelStarts.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 21. Model Scalable_AggregationTransaction_Redis.xml Starts in SAS ESM</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_ScalableModelStarts.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 22. Model Scalable_AggregationTransaction_Redis.xml Starts in SAS ESM</em>
+</p>
 
-Now, we can start streaming the incoming events to Kafka `intopic` so that the scalable model can start processing the events. Figure 22, shows how we load and configure the `inputtransactions.xml` model. Note this model does not scale. 
+Now, we can start streaming the incoming events to Kafka `intopic` so that the scalable model can start processing the events. Figure 23, shows how we load and configure the `inputtransactions.xml` model. Note this model does not scale. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_LoadWriteTransAndPropESM.jpg">
-  <figcaption><i>Figure 22. Load and Configure inputtransactions.xml model in SAS ESM</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_LoadWriteTransAndPropESM.jpg"/>
+    <br>
+    <em>Figure 23. Load and Configure inputtransactions.xml model in SAS ESM</em>
+</p>
 
-Once, the user transaction events start to flow in the Kafka, then with time, the scalable model starts to scale to handle the increasing load as shown in Figure 23. 
+Once, the user transaction events start to flow in the Kafka, then with time, the scalable model starts to scale to handle the increasing load as shown in Figure 24. 
 
-<figure align="center">
-  <img src="demos/images/Demo4_scalingServers.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 23. Scalable Model in ESM</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo4_scalingServers.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 24. Scalable Model in ESM</em>
+</p>
 
 
 
