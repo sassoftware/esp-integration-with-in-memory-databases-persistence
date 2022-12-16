@@ -72,10 +72,11 @@ The two windows are:
 1.	ESP StateDB Writer Window
 2.	ESP StateDB Reader Window
 
-<figure align="center">
-  <img src="images/ESPInMemIntegration.jpg" width="60%" height="60%">
-  <figcaption><i>Figure 1. ESP Integration with Singlestore and Redis via ESP StateDB Windows</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/ESPInMemIntegration.jpg" width="60%" height="60%"/>
+    <br>
+    <em>Figure 1: ESP Integration with Singlestore and Redis via ESP StateDB Windows</em>
+</p>
 
 Let’s have [a deep dive into the architectural designs](statedb_windows_architecture/statedb_windows_arch.md) of these windows. We will also learn how these windows communicate with Singlestore and Redis. 
 
