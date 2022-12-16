@@ -117,10 +117,11 @@ Following are the three reference architectures with ESP StateDB Windows:
 ## Benefits of Using ESP StateDB Windows
 Figure 2 illustrated the key benefits of using ESP StateDB Windows for state and data persistence rather than relying/using the ESP server pods internal memory. 
 
-<figure align="center">
-  <img src="images/benefitsStateDBWindows.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 2. Benefits of Using ESP StateDB Windows</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/benefitsStateDBWindows.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 2: Benefits of Using ESP StateDB Windows</em>
+</p>
 
 
 1. **Achieve stateless ESP models.** Integration with StateDB Windows allows having stateless ESP models for join and aggregation operations. However, it is not yet possible for other windows like pattern, geofencing, and MAS.
@@ -145,10 +146,11 @@ Figure 3 demonstrates the performance evaluation of Singlestore VS Redis for wri
 
 *Setup:* Both Singlestore and Redis are running in a cluster configuration of 3 nodes in Kubernetes.  It was a simple, most basic configuration recommended in the documentation of each of these in-memory databases. *Please note that these evaluations should not be considered as benchmark performance.* 
 
-<figure align="center">
-  <img src="images/perfeval.jpg">
-  <figcaption><i>Figure 3. Performance Evaluation of ESP StateDB Windows for Write, Lookup and Aggregation Operations</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/perfeval.jpg"/>
+    <br>
+    <em>Figure 3. Performance Evaluation of ESP StateDB Windows for Write, Lookup and Aggregation Operations</em>
+</p>
 
 1.	**Write Performance.** When the total number of events written to both databases was up to 1 million, Redis surpasses Singlestore. Therefore, if the rate of incoming events to the ESP is fast then Redis must be configured.
 
