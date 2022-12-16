@@ -25,10 +25,11 @@ To run the demos, you will need the following:
 
 Figure 1 demonstrates the flow of the demo. In this demo, we load 1 million records  (dimension/reference/whitelist data)of user information with their account balances. Here we load the dimension data from a CSV file into Redis using an ESP model. 
 
-<figure align="center">
-  <img src="demos/images/Demo1_LoadReferenceData.jpg" width="80%" height="80%">
-  <figcaption><i>Figure 1. Demo to Load Reference/Dimension data into Redis using ESP StateDB Writer Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Demo1_LoadReferenceData.jpg" width="80%" height="80%"/>
+    <br>
+    <em>Figure 1. Demo to Load Reference/Dimension data into Redis using ESP StateDB Writer Window</em>
+</p>
 
 Reference data can be loaded to Redis using data sources, pipelines, or any other mechanism as well. However, in our case, we are using ESP to do that. 
 
