@@ -16,10 +16,12 @@ The ESP StateDB Writer Window is used to write the incoming events to the define
 
 Figure 1 demonstrates the high-level architecture of the ESP StateDB writer window.
 
-<figure align="center">
-  <img src="images/ESP_StateDB_Writer.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 1. High-level Architecture of ESP StateDB Writer Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/ESP_StateDB_Writer.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 1. High-level Architecture of ESP StateDB Writer Window</em>
+</p>
+
 
 The StateDB writer window, at the time of initialization, writes metadata to the in-memory DB. The metadata includes the key formed from multiple key fields of input event schema. This metadata is used by the StateDB reader window to form the key from incoming event fields to fetch data.
 The StateDB writer window forms the primary index from the incoming event key fields and writes the data as Key-Value pair to the in-memory database.
@@ -37,10 +39,11 @@ The StateDB Reader window is used to query or fetch data from the defined extern
 
 Figure 2 demonstrates the high-level architecture of the ESP StateDB reader window.
 
-<figure align="center">
-  <img src="images/ESP_StateDB_Reader.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 2. High-level Architecture of ESP StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/ESP_StateDB_Reader.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 2. High-level Architecture of ESP StateDB Reader Window</em>
+</p>
 
 The StateDB reader window, at the time of initialization, fetches the metadata from the in-memory database. The metadata consists of semicolon-separated key fields. This information helps in deciding whether the window is being used for lookup which is a one-to-one search or a one-to-many search.
 
