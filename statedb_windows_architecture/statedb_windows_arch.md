@@ -1,5 +1,5 @@
 
-#Deep Dive into the Architecture of StateDB Windows
+# Deep Dive into the Architecture of StateDB Windows
 
 In this section you will learn:
 
