@@ -6,10 +6,11 @@ This section covers all the architectures corresponding to integration with exte
 ### Description
 Figure 1 illustrates how ESP server pods connect to the low latency, high throughput in-memory database using a SAS ESP StateDB Windows in the ESP XML projects. As mentioned previously, operations like aggregation over long retention periods, and lookup from reference/dimension/whitelist data with millions of records, can benefit from Singlestore and Redis in-memory databases for data and state persistence. Processed events are persisted in the database. In the event of a crash, the state continues to persist in the in-memory database which is also shared among all the other ESP server pods accessing the database. Additionally, when a new ESP server pod replaces the crashes pod, it fetches the latest state from the DB and resumes processing. If there are some duplicates, their processing can be skipped by using the database to know if they have been processed earlier or not.
 
-<figure align="center">
-  <img src="reference_architectures/images_refarch/K8s_stateless_using_DB.png">
-  <figcaption><i>Figure 1. High-Level Architecture for Stateless ESP Projects Using DB for Persistent State and Data</i></figcaption>
-</figure>
+<p align="center">
+ <img src="reference_architectures/images_refarch/K8s_stateless_using_DB.png"/>
+    <br>
+    <em>Figure 1. High-Level Architecture for Stateless ESP Projects Using DB for Persistent State and Data</em>
+</p>
 
 Learn from the [Video on SAS ESP State Management Using In-Memory Databases](http://sas-social.brightcovegallery.com/sharing?videoId=6255425305001)
 
