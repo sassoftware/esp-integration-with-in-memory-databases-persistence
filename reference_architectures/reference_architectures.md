@@ -33,10 +33,11 @@ Learn from the [Video on SAS ESP State Management Using In-Memory Databases](htt
 ### Description
 Figure 2 demonstrates the high level architecture of acheiving scalability of ESP server pods using Kafka. The scaling ESP server pods share the same consumer group to pull the data from the same Kafka topic which can have one or many partitions. With Kafka, we ensure that all the ESP server pods are processing incoming events with only-once semantic, i.e., events/messages are processed only once.
 
-<figure align="center">
-  <img src="reference_architectures/images_refarch/ESP_Scaling_with_Kafka_using_in_memory_DB.png">
-  <figcaption><i>Figure 2. calability of ESP Server Pods with Kafka using In-Memory Database for State and Data Persistence</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images_refarch/ESP_Scaling_with_Kafka_using_in_memory_DB.png"/>
+    <br>
+    <em>Figure 2. Scalability of ESP Server Pods with Kafka using In-Memory Database for State and Data Persistence</em>
+</p>
 
 During the events of ESP server pod crash or failure, Kafka undergoes rebalancing which means reassignment of partitions to the running ESP server pods. This ensures that the remaining ESP server pods continue to serve all the events from all the partitions in the Kafka topic. Kafka rebalances whenever an ESP server pod joins or leaves a consumer group.
 
@@ -70,10 +71,11 @@ Additionally, all the auto-scaling ESP server pods can concurrently access Singl
 
 Figure 3 shows how we can have cascading ESP server pods (where each of them runs a different ESP XML project) using the message buses such as Kafka, RabbitMQ, Amazon Kinesis, Azure Event Hubs, Azure IoT Hubs, etc. Here the ESP server pod writes its output to the message bus which is the input for the next ESP server pod. There can be multiple ESP server pods reading and writing to the intermediate message buses.
 
-<figure align="center">
-  <img src="reference_architectures/images_refarch/K8s_cascading_projects_using_buses.png">
-  <figcaption><i>Figure 3. High-Level Architecture for Multiple Cascading Projects Using Message Buses and integrating with in-memory databases in K8s</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images_refarch/K8s_cascading_projects_using_buses.png"/>
+    <br>
+    <em>Figure 3. High-Level Architecture for Multiple Cascading Projects Using Message Buses and integrating with in-memory databases in K8s</em>
+</p>
 
 This approach is very useful in situations where we want to break a big ESP XML project into multiple projects and where some of these ESP projects can be scalable. Message buses ensure there is no event/data loss when during the travel from one ESP server pod to another. Additionally, the message buses allow ESP server pods to consume streaming events at their own pace without interfering with the functionality of the other ESP server pods.
 NOTE: Using message buses brings in some additional latency. Thorough performance testing must be conducted to ensure that the latency is within the acceptable performance requirement SLO ranges (especially for mission-critical use-cases).
