@@ -158,7 +158,7 @@ Figure 3 demonstrates the performance evaluation of Singlestore VS Redis for wri
 So, based on these evaluations, whenever the use-case demands write and lookup operations with small groups of aggregation, Redis is the right choice. But, if the aggregation group size is huge, one must opt for Singlestore. 
 
 ## Sample use-cases to understand migration to StateDB windows
-In this [section](https://gitlab.sas.com/IOT/reference-architectures/esp-kubernetes/sas-esp-integration-with-in-memory-databases-for-state-and-data-persistence/-/blob/main/sample-use-cases-to-understand-migration-to-statedb-windows/sample-use-cases-to-understand-migration-to-statedb-windows.md) we present use cases that can act as reference to migrate your existing approach to a StateDB based approach. Go through the section to understand the potential issues with your current approaches related to Lookup, Aggregation and Multiple Retention implementation in ESP and how StateDB windows can help in solving them.
+In this [section](sample-use-cases/sample-use-cases-to-understand-migration-to-statedb-windows.md) we present use cases that can act as reference to migrate your existing approach to a StateDB based approach. Go through the section to understand the potential issues with your current approaches related to Lookup, Aggregation and Multiple Retention implementation in ESP and how StateDB windows can help in solving them.
 
 ## Demos
 [In this section](demos/demos.md), you will have the opportunity to run some sample examples. 
