@@ -28,10 +28,11 @@ This is a very classic requirement that is seen in many domains like banking, te
 
 If this use case needs to be implemented in ESP without StateDB Windows, then we would have a model as below.
 
-<figure align="center">
-  <img src="images/usecase1_old.png">
-  <figcaption><i>Figure 1: Usecase1: Tradition approach for Lookup</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase1_old.png"/>
+    <br>
+    <em>Figure 1: Usecase1: Tradition approach for Lookup</em>
+</p>
 
 Understanding the Model:
 
@@ -52,10 +53,11 @@ ESP bank wants to monitor any high-value transaction done by the user in a quart
 
 Let's extend the above ESP model to handle this requirement in ESP without using the StateDB Windows.
 
-<figure align="center">
-  <img src="images/usecase2_old.png">
-  <figcaption><i>Figure 2: Usecase2: Tradition approach for Aggregation</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase2_old.png"/>
+    <br>
+    <em>Figure 2: Usecase2: Tradition approach for Aggregation</em>
+</p>
 
 The model is similar to the model of Usecase1 in Figure 1. However, there are some new ones for this requirement.
 
@@ -75,10 +77,11 @@ ESP bank has two different categories of cards, Standard and Premium. For Standa
 
 We will simply extend the above model to achieve the requirement without using the StateDB window.
 
-<figure align="center">
-  <img src="images/usecase3_old.png">
-  <figcaption><i>Figure 3: Usecase3: Tradition approach for Multiple Retention</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase3_old.png"/>
+    <br>
+    <em>Figure 3: Usecase3: Tradition approach for Multiple Retention</em>
+</p>
 
 The model will be like the one above. This is just a bit modified version of Use case 2 above.
 1.	`UserDetails` output is split based on `CardType` using a splitter expression.
@@ -103,10 +106,11 @@ We consider the same ESP bank usecase here as well. ESP bank wants to upgrade th
 When a customer does a transaction, the system should fetch the details of the customer like the Customer Name, Phone Number, and category of the Card (like Standard or Platinum).
 When this use case is implemented in ESP with StateDB Windows, the windows integrate with an in-memory Database, either Redis or SingleStore to store the state information. The approach to model building changes a bit. Figure 6 presents the model.
 
-<figure align="center">
-  <img src="images/usecase1_statedb_writer.png">
-  <figcaption><i>Figure 6: Usecase1: Writing With StateDB </i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase1_statedb_writer.png"/>
+    <br>
+    <em>Figure 6: Usecase1: Writing With StateDB</em>
+</p>
 
 In this case, the ESP model to fetch data from a traditional database and write it to an in-memory DB. Such a model can be used independently to load the reference/whitelist/dimension data to in-memory database. However, one must make sure that it runs and finishes the data loading before the streaming data comes in. The model can be designed to scaleup to perform concurrent writes to the database. 
 
@@ -114,10 +118,11 @@ This model is like the one above.
 1.	`UserInfo` is the dimension data which will load all the user information from a database/CSV/Kafka etc.
 2.	`WriteUserData_DB` is the StateDB writer window that loads all the user data to the in-memory DB along with the metadata (if any).
 
-<figure align="center">
-  <img src="images/usecase1_statdb_reader.png">
-  <figcaption><i>Figure 7: Usecase1: Reading With StateDB</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase1_statdb_reader.png"/>
+    <br>
+    <em>Figure 7: Usecase1: Reading With StateDB</em>
+</p>
 
 The ESP model in Figure 7 can be an independent project. The model fetches (performs lookup) the records from the in-memory database for the corresponding user in the transaction event. 
 
@@ -142,10 +147,11 @@ ESP bank wants to monitor any high-value transaction done by the user in a quart
 We will extend the ESP streaming model with StateDB reader window (Figure 2) for this requirement. In Usecase 1, we showed how the StateDB writer and reader windows can run in separate projects. 
 However, it is also possible to have both windows in the same model as shown the Figure 8.
 
-<figure align="center">
-  <img src="images/usecase2_statedb.png">
-  <figcaption><i>Figure 8: Usecase2: Aggregation With StateDB</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase2_statedb.png"/>
+    <br>
+    <em>Figure 8: Usecase2: Aggregation With StateDB</em>
+</p>
 
 We have additional windows in this model in comparison to the model in Figure 2:
 
@@ -168,10 +174,11 @@ ESP bank has two different categories of cards, Standard and Premium. For Standa
 
 We will modify the ESP streaming model (shown in Figure 3) with StateDB reader window with aggregation. 
 
-<figure align="center">
-  <img src="images/usecase3_statedb.png">
-  <figcaption><i>Figure 9: Usecase3: Mutliple retention With StateDB</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/usecase3_statedb.png"/>
+    <br>
+    <em>Figure 9: Usecase3: Mutliple retention With StateDB</em>
+</p>
 
 Figure 9 demonstrates the ESP model. Following are the modifications in the ESP windows of usecase 2 (Figure 3).
 1.  `Compute_TTL` calculates the TTL value in the number of seconds based on the card type and adds the value as *ttl field* in the outgoing event schema.
