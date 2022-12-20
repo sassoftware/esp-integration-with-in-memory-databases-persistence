@@ -59,10 +59,11 @@ The StateDB Reader window is used to fetch data from the defined external in-mem
 
 The figure below demonstrates the high-level architecture of the ESP StateDB reader window.
 
-<figure align="center">
-  <img src="images/ESP_StateDB_Reader.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 2. High-level Architecture of ESP StateDB Reader Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/ESP_StateDB_Reader.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 2. High-level Architecture of ESP StateDB Reader Window</em>
+</p>
 
 At a high level, the State DB Reader window fetches 0, 1, or more records from the datastore based on the query property set for the window. The output event depends on the query and will include fields fetched from the datastore or their aggregated values.
 
@@ -123,19 +124,21 @@ Like any entry in Redis, Primary Key Metadata is also a key-value pair where the
 
 For our sample, the primary key metadata will look as shown in Figure 3.
 
-<figure align="center">
-  <img src="images/Primary_key_metadata.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 3. Primary Key Metadata</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Primary_key_metadata.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 3. Primary Key Metadata</em>
+</p>
 
 In the metadata key above, `transactions: _esp_meta_primarykey_fields_` is the key to the Primary metadata where `transactions` is the prefix property set for the window. `userid;timestamp` is the value where `userid` and `timestamp` are key fields in the incoming event schema based on their order in the schema.
 
 **Secondary Key Metadata**: Like Primary Key Metadata, the Writer window creates Secondary Key Metadata entries in Redis if the Secondary Index property is set in the window. It helps the Reader Window to form the key to search for records when using a secondary index search. This also uses the String data structure of Redis.
 
-<figure align="center">
-  <img src="images/Secondary_key_metadata.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 4. Secondary Key Metadata</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Secondary_key_metadata.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 4. Secondary Key Metadata</em>
+</p>
 
 Figure 4 shows the Secondary Key Metadata. In the metadata key, `transactions: _esp_meta_secondary_indexes_` is the key of the record where `transactions` is the prefix property of the window. `user_si:userid` is the value where `user_si` is the name of the secondary index and `userid` is the field in the input schema for which the secondary index is created.
 
@@ -146,10 +149,11 @@ For each event that comes into the StateDB Writer window, the window writes two 
 
 For our sample, the primary key data will look as shown in Figure 5.
 
-<figure align="center">
-  <img src="images/Primary_data_Redis.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 5. Primary Key Data</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Primary_data_Redis.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 5. Primary Key Data</em>
+</p>
 
 In the primary key record above `transactions:userid_1;1661425112358987` is the key where `transactions` is the prefix added to all the transactions data. `userid_1` and `1661425112358987` are the values of the key fields of the input event to the Writer window.
 
@@ -157,19 +161,21 @@ The value of the record is a hash set data structure that consists of the data f
 
 **Secondary Key record**: To fetch multiple records for a single key, ESP uses the concept of Secondary Index. This index is used for Aggregations as well as for one-to-many events fetch. Redis does not provide any concept of a secondary index out of the box. So we have designed our Secondary Index implementation. StateDB Writer window writes the secondary index as a key-value pair where the key is the prefix followed by the value of the secondary index fields. The corresponding value of this Redis record is a Sorted Set data structure where each member is the primary key of the records which belong to the secondary index.  In a Redis Sorted Set, every member is associated with a score which is used to order the members. In the case of the secondary index records, the score of the members is a timestamp which we call the *Time-To-Die (TTD)* for the event. Time-To-Die is Time-To-Live (TTL) added to the current timestamp in microseconds. It has the same value as `_esp_meta_ttd_` metadata timestamp of the event.
 
-<figure align="center">
-  <img src="images/Secondary_data_Redis.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 6. Secondary Key Data</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Secondary_data_Redis.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 6. Secondary Key Data</em>
+</p>
 
 In the Secondary Index record as shown in Figure 6 above, `transactions:SK:user_si:userid_1` is the secondary key where `transactions` is the prefix. `SK` indicates that the record is a secondary key. `user_si` is the name of the secondary key and `userid_1` is the value of the secondary key field in the ESP event. The secondary key can be composed of one or more fields of the event.
 
 The value of this record is the Redis Sorted Set data structure where `Member` is the primary key of record matching the secondary key index. `Score` is the Time-To-Die (TTD) for the individual record.
 
-<figure align="center">
-  <img src="images/Secondary_key_Primary_data.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 7. Primary key records in Secondary key Sorted Set</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/Secondary_key_Primary_data.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 7. Primary key records in Secondary key Sorted Set</em>
+</p>
 
 Figure 7 presents the primary key records which are part of the secondary key index used in the example above. It is important to note that they all have the same value of the `userid` field which forms the secondary index.
 
@@ -313,26 +319,29 @@ In the case of Singlestore, it is mandatory to have the database before the ESP 
 
 If the table is not already present, the Writer window creates a table with columns as the fields in the schema. Just like Redis, two timestamp metadata columns are created: (1) `_esp_meta_timestamp_` which is the time when the records were written to the table, and (2) `_esp_meta_ttd_` which is the time after which the records will not be considered at all (they are considered expired).
 
-<figure align="center">
-  <img src="images/SingleStore_Table.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 8. SingleStore table</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/SingleStore_Table.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 8. SingleStore table</em>
+</p>
 
 The created table has all the required indexes, i.e., *Primary Index* and *Secondary Index*. They are added at the time of table creation. *Primary Index* is the combination of the key fields in the schema of the window. *Secondary Indexes* are created with the name of the index and the columns mentioning the fields in the schema in the Writer window secondary index.
 
-<figure align="center">
-  <img src="images/SingleStore_Indexes.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 9. SingleStore table indexes</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/SingleStore_Indexes.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 9. SingleStore table indexes</em>
+</p>
 
 Apart from that, the metadata columns for timestamps are also added as keys as they are used in queries for fetching the matching records.
 
 The incoming events to the Writer window are written as rows in the table as shown in Figure 10. ESP depends on SingleStore to manage the Primary and Secondary keys.
 
-<figure align="center">
-  <img src="images/SingleStore_data.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 10. SingleStore table data</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/SingleStore_data.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 10. SingleStore table data</em>
+</p>
 
 #### Deleting expired rows
 Unlike Redis, SingleStore does not provide any feature like Time-To-Live (TTL). We have implemented the logic to manage the rows (or events) for which the `_esp_meta_ttd_` value is less than the current timestamp. The expired rows are deleted from a table whenever a new event is added as a row to the table. The rows are inserted into the table using the SQL query. 
@@ -452,23 +461,3 @@ The following are the points one must consider when choosing one of these in-mem
 2.	If the requirement is for Aggregation over a large group, then SingleStore is better than Redis as the Aggregation happens in the database itself.
 
 The architecture details presented above help us understand the internals of the integration which in turn helps us understand the behavior of ESP with these in-memory databases.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
