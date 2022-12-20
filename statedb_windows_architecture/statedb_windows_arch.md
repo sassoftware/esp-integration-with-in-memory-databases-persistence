@@ -38,10 +38,11 @@ ESP has a pair of StateDB windows, i.e., ESP StateDB Writer window and ESP State
 ### ESP StateDB Writer Window
 Figure 1 demonstrates the high-level design of the ESP StateDB Writer Window that is used to write the incoming events to the defined in-memory database. 
 
-<figure align="center">
-  <img src="images/ESP_StateDB_Writer.jpg" width="50%" height="50%">
-  <figcaption><i>Figure 1. High-level Design of ESP StateDB Writer Window</i></figcaption>
-</figure>
+<p align="center">
+ <img src="images/ESP_StateDB_Writer.jpg" width="50%" height="50%"/>
+    <br>
+    <em>Figure 1: High-level Design of ESP StateDB Writer Window</em>
+</p>
 
 At a high level, the StateDB Writer Window has 3 main operations:
 
