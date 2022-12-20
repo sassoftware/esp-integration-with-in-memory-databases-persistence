@@ -1,6 +1,29 @@
 # The Architecture of StateDB Windows
 
-[TOC]
+<!-- TOC start -->
+- [Introduction](#introduction)
+- [High Level Design](#high-level-design)
+  * [ESP StateDB Writer Window](#esp-statedb-writer-window)
+  * [ESP StateDB Reader Window](#esp-statedb-reader-window)
+- [StateDB Windows Architecture](#statedb-windows-architecture)
+- [StateDB Windows Architecture for Redis](#statedb-windows-architecture-for-redis)
+  * [StateDB Writer Window](#statedb-writer-window)
+    + [Metadata](#metadata)
+    + [Data](#data)
+    + [Deleting expired records and entries](#deleting-expired-records-and-entries)
+  * [StateDB Reader Window](#statedb-reader-window)
+    + [Lookup](#lookup)
+    + [Aggregation ](#aggregation)
+    + [One-to-Many Events](#one-to-many-events)
+- [StateDB Windows Architecture for SingleStore](#statedb-windows-architecture-for-singlestore)
+  * [StateDB Writer Window](#statedb-writer-window-1)
+    + [Deleting expired rows](#deleting-expired-rows)
+  * [StateDB Reader Window](#statedb-reader-window-1)
+    + [Lookup](#lookup-1)
+    + [Aggregation](#aggregation-1)
+    + [One-to-Many Events](#one-to-many-events-1)
+- [Conclusion](#conclusion)
+<!-- TOC end -->
 
 ## Introduction
 StateDB Windows allow ESP to interact with an in-memory database to offload the ESP state and access it whenever required. This allows ESP projects to run stateless. **Currently, we only support Redis and Singlestore.** 
